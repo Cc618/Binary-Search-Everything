@@ -1,0 +1,14 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+
+        {
+            "label": "build_cpp",
+            "type": "shell",
+            "command": "g++ -o /tmp/exo -g --std=c++17 ${file}",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+        }
+    ]
+}
