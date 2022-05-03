@@ -6,33 +6,37 @@ static float bruteforce(vector<int> a, vector<int> b, long long k) {
     vector<int> avgs;
     for (auto a_item : a) {
         for (auto b_item : b) {
-            avgs.push_back((a_item + b_item) / 2);
+            avgs.push_back(a_item + b_item);
         }
     }
 
     sort(avgs.begin(), avgs.end());
 
+    // TODO
+    for (auto e : avgs) {
+        cout << e * .5f << " ";
+    }
+    cout << endl;
+
     // 1 based
-    return avgs[k - 1];
+    return avgs[k - 1] * .5f;
 }
 
-bool is_lower(const vector<int> &a, const vector<int> &b, long long k,
-              int mid) {
-    // cout << mid << endl;
-
+// Count how many values are strictly lower than x
+long long count_lower(const vector<int> &a, const vector<int> &b, int x) {
     long long n_lower = 0;
     for (int i = 0; i < a.size(); ++i) {
         // TODO : Binary search
         for (int j = 0; j < b.size(); ++j) {
             int current_avg = (a[i] + b[j]) / 2;
-            if (current_avg >= mid)
+            if (current_avg >= x)
                 break;
 
             ++n_lower;
         }
     }
 
-    return n_lower > k;
+    return n_lower;
 }
 
 float average_index(vector<int> a, vector<int> b, long long k) {
@@ -48,18 +52,19 @@ float average_index(vector<int> a, vector<int> b, long long k) {
         e *= 2;
 
     // 0 based indexing
-    --k;
+    // --k;
 
     int l = 0;
     int r = (a.back() + b.back()) / 2 + 1;
     while (l < r) {
         int mid = l + (r - l) / 2;
+        cout << l << " " << mid << " " << r << endl;
 
         // Query whether the K-th value is lower or higher than the mid value
-        if (is_lower(a, b, k, mid)) {
-            r = mid;
-        } else {
+        if (count_lower(a, b, mid) < k) {
             l = mid + 1;
+        } else {
+            r = mid;
         }
     }
 
@@ -83,6 +88,8 @@ int main(int argc, char **argv) {
     vector<int> b = {2, 4, 5};
 
     cout << average_index(a, b, 5) << endl;
+
+    cout << average_index(vector<int>{1, 10}, vector<int>{4, 8}, 2) << endl;
 
     // ::testing::InitGoogleTest(&argc, argv);
     // int ret{RUN_ALL_TESTS()};
