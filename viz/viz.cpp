@@ -45,6 +45,36 @@ int main() {
     vector<int> array{1, 4, 5, 6, 8, 10, 10, 13, 18, 42, 64};
 
     bin_search(array, 42);
+    cout << endl;
+
+    for_each(array.begin(), array.end(), [](int &e) { e = e < 42 ? 0 : 1; });
+
+    bin_search(array, 1);
+    cout << endl;
+
+    array = vector<int>{0, 0, 0, 1, 1, 1, 2, 2, 2};
+
+    int low =
+        distance(array.begin(), lower_bound(array.begin(), array.end(), 1));
+    int upp =
+        distance(array.begin(), upper_bound(array.begin(), array.end(), 1));
+
+    cout << "Lower bound:" << endl;
+    cout << array << endl;
+    print_cursors({low});
+
+    cout << "Upper bound:" << endl;
+    cout << array << endl;
+    print_cursors({upp});
+
+    cout << "Lower bound + 1:" << endl;
+    cout << array << endl;
+    print_cursors({low + 1});
+
+    cout << "Upper bound + 1:" << endl;
+    cout << array << endl;
+    print_cursors({upp + 1});
+    cout << endl;
 
     // cout << array << endl;
     // print_cursors({1, 3, 4, 8});
