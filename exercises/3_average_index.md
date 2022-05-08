@@ -14,10 +14,10 @@ You want to change your program to print only one average value, the $K$-th one.
 - $1 \le M \le 2 \times 10^5$
 - $1 \le A_i \le 2 \times 10^5$
 - $1 \le B_j \le 2 \times 10^5$
-- $1 \le K \le 4 \times 10^10$
+- $1 \le K \le 1 \times 10^{9}$
 
 ## Time complexity
-- O(min(N, M) $\times$ log(min(N, M)))
+- O(U $\times$ log(U) $\times$ log(U))) with U = max(N, M)
 
 ## Examples
 #### Input
