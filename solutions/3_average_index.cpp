@@ -2,7 +2,7 @@
 
 using namespace std;
 
-static float bruteforce(vector<int> a, vector<int> b, long long k) {
+static float bruteforce(vector<int> a, vector<int> b, int k) {
     vector<int> avgs;
     for (auto a_item : a) {
         for (auto b_item : b) {
@@ -24,8 +24,8 @@ static float bruteforce(vector<int> a, vector<int> b, long long k) {
 }
 
 // Count how many values are strictly lower than x
-long long count_lower(const vector<int> &a, const vector<int> &b, int x) {
-    long long n_lower = 0;
+int count_lower(const vector<int> &a, const vector<int> &b, int x) {
+    int n_lower = 0;
     for (int i = 0; i < a.size(); ++i) {
         // TODO : Binary search
         for (int j = 0; j < b.size(); ++j) {
@@ -40,7 +40,7 @@ long long count_lower(const vector<int> &a, const vector<int> &b, int x) {
     return n_lower;
 }
 
-float average_index(vector<int> a, vector<int> b, long long k) {
+float average_index(vector<int> a, vector<int> b, int k) {
     sort(a.begin(), a.end());
     sort(b.begin(), b.end());
 
@@ -50,6 +50,7 @@ float average_index(vector<int> a, vector<int> b, long long k) {
     for (auto &e : b)
         e *= 2;
 
+    // We have to find the last mid where count_lower(a, b, mid) < k is true
     int l = 0;
     int r = (a.back() + b.back()) / 2 + 1;
     while (l < r) {
@@ -61,6 +62,7 @@ float average_index(vector<int> a, vector<int> b, long long k) {
             r = mid;
         }
     }
+    // r points to the first count_lower(a, b, r) >= k
     int result = max(0, r - 1);
 
 #if 0
