@@ -27,7 +27,8 @@ static float bruteforce(vector<int> a, vector<int> b, int k) {
 int count_lower(const vector<int> &a, const vector<int> &b, int x) {
     int n_lower = 0;
     for (int i = 0; i < a.size(); ++i) {
-        // TODO : Binary search
+#if 0
+        // O(N) version
         for (int j = 0; j < b.size(); ++j) {
             int current_avg = (a[i] + b[j]) / 2;
             if (current_avg >= x)
@@ -35,6 +36,21 @@ int count_lower(const vector<int> &a, const vector<int> &b, int x) {
 
             ++n_lower;
         }
+#endif
+
+        // Find how many values < x by binary search
+        int l = 0;
+        int r = b.size();
+        while (l < r) {
+            int mid = l + (r - l) / 2;
+            int current_avg = (a[i] + b[mid]) / 2;
+            if (current_avg < x) {
+                l = mid + 1;
+            } else {
+                r = mid;
+            }
+        }
+        n_lower += l;
     }
 
     return n_lower;
