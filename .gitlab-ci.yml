@@ -6,6 +6,6 @@ pages:
     - echo "The site will be deployed to $CI_PAGES_URL"
   artifacts:
     paths:
-      - web
+      - public
   only:
     - master
