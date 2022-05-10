@@ -7,5 +7,5 @@ pages:
   artifacts:
     paths:
       - web
-  rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  only:
+    - master
