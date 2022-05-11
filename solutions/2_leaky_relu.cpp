@@ -91,13 +91,6 @@ TEST(LeakyRelu, OnlyLinear) {
 }
 
 int main(int argc, char **argv) {
-    // vector<float> a = {1, 1.2, 1.4, 1.6, 2.6, 3.6, 4.6};
-
-    // // 4
-    // vector<float> a = {1, 1.2, 2.2};
-    // cout << leaky_relu(a) << endl;
-    // return 0;
-
     ::testing::InitGoogleTest(&argc, argv);
     int ret{RUN_ALL_TESTS()};
     return ret;
