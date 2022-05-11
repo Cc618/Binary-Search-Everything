@@ -1,9 +1,9 @@
-image: busybox
+image: alpine
 
 pages:
   stage: deploy
   script:
-    - apt install python3
+    - apk add --no-cache python3
     - scripts/deploy.sh
     - echo "The site will be deployed to $CI_PAGES_URL"
   artifacts:
