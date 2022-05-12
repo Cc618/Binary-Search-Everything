@@ -8,6 +8,9 @@ set -e
 rm -rf public
 cp -r web public
 
+# Syntax highlight theme
+rougify style gruvbox.light > public/syntax.css
+
 # Parse exercises
 echo "<ul>" > public/summary.html
 for exo in exercises/*.md; do

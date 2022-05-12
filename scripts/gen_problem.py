@@ -20,8 +20,18 @@ def markdown_to_html(path):
 
 
 def highlight_code(code):
+    with open("/tmp/code.cpp", "w") as f:
+        f.write(code)
+
+    proc = sp.run(
+        ["rougify", "-f", "html", "/tmp/code.cpp"],
+        capture_output=True,
+    )
+
+    assert proc.returncode == 0, f"Failed to parse code"
+
     txt = '<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">'
-    txt = txt + html.escape(code)
+    txt = txt + str(proc.stdout, "utf8")
     txt = txt + "</span></code></pre></div>"
 
     return txt
