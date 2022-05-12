@@ -13,7 +13,8 @@ mkdir public/problems
 echo "<ul>" > public/summary.html
 for exo in exercises/*.md; do
     name="$(basename "${exo%.md}")"
-    scripts/gen_problem.sh "$name"
+    scripts/gen_problem.py "$name"
+    echo "> $name"
 done
 echo "</ul>" >> public/summary.html
 

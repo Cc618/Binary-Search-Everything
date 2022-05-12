@@ -2,6 +2,7 @@
 
 using namespace std;
 
+// $BEGIN$
 // Returns whether or not it is possible to make this score with at least k
 // generations
 // Complexity : O(N)
@@ -59,6 +60,7 @@ int max_sticks_score(const vector<int> &columns, int k) {
 
     return last_possible;
 }
+// $END$
 
 #include <gtest/gtest.h>
 

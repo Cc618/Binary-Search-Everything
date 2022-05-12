@@ -2,26 +2,11 @@
 
 using namespace std;
 
+// $BEGIN$
 // Returns whether it is the leaky part
 bool leaky_part(const vector<float> &values, int i) {
     // Float precision...
     return abs(values[i] - values[i + 1]) >= .99f;
-}
-
-// Using STL's lower_bound (O(N) preprocessing)
-int leaky_relu_stl(const vector<float> &values) {
-    vector<bool> filter(values.size() - 1);
-    for (int i = 0; i + 1 < values.size(); ++i) {
-        filter[i] = leaky_part(values, i);
-    }
-
-    // Only leaky
-    if (!filter.back()) {
-        return values.size();
-    }
-
-    return distance(filter.begin(),
-                    lower_bound(filter.begin(), filter.end(), true));
 }
 
 int leaky_relu(const vector<float> &values) {
@@ -54,6 +39,23 @@ int leaky_relu(const vector<float> &values) {
     }
 
     return l;
+}
+// $END$
+
+// Using STL's lower_bound (O(N) preprocessing)
+int leaky_relu_stl(const vector<float> &values) {
+    vector<bool> filter(values.size() - 1);
+    for (int i = 0; i + 1 < values.size(); ++i) {
+        filter[i] = leaky_part(values, i);
+    }
+
+    // Only leaky
+    if (!filter.back()) {
+        return values.size();
+    }
+
+    return distance(filter.begin(),
+                    lower_bound(filter.begin(), filter.end(), true));
 }
 
 #include <gtest/gtest.h>

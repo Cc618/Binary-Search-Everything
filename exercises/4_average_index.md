@@ -1,5 +1,4 @@
-# Average Index
-## Statement
+### Statement
 You are given two integer arrays A and B of length N and M respectively.
 You wrote a program that prints out every average values in non decreasing order.
 
@@ -9,25 +8,26 @@ In other words, your program prints every value $C_k = \frac {A_i + B_j} 2$ such
 
 You want to change your program to print only one average value, the $K$-th one.
 
-## Input
+### Input
 - $1 \le N \le 2 \times 10^5$
 - $1 \le M \le 2 \times 10^5$
 - $1 \le A_i \le 2 \times 10^5$
 - $1 \le B_j \le 2 \times 10^5$
 - $1 \le K \le 1 \times 10^{9}$
 
-## Time complexity
+### Time complexity
 - O(U $\times$ log(U) $\times$ log(U))) with U = max(N, M)
 
-## Examples
-#### Input
+### Examples
+
+##### Input
 - A = [1, 4, 3]
 - B = [5, 2, 4]
 - K = 5
 
-#### Output
+##### Output
 3
 
-#### Details
+##### Details
 All possibles average values are [1.5, 2.5, 2.5, 3, 3, 3.5, 4, 4, 4.5] in order.
 The 5th one is 3.

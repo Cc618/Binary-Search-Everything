@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# TODO : Remove
+
 # Generates a problem page from its name
 
 if [ "$#" != 1 ]; then

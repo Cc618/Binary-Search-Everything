@@ -23,6 +23,7 @@ static float bruteforce(vector<int> a, vector<int> b, int k) {
     return avgs[k - 1] * .5f;
 }
 
+// $BEGIN$
 // Count how many values are strictly lower than x
 int count_lower(const vector<int> &a, const vector<int> &b, int x) {
     int n_lower = 0;
@@ -100,6 +101,7 @@ float average_index(vector<int> a, vector<int> b, int k) {
 
     return result * .5f;
 }
+// $END$
 
 #include <gtest/gtest.h>
 

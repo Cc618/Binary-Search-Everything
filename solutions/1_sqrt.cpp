@@ -2,6 +2,7 @@
 
 using namespace std;
 
+// $BEGIN$
 int int_sqrt(int n) {
     int l = 0;
     int r = n;
@@ -19,6 +20,7 @@ int int_sqrt(int n) {
 
     return l;
 }
+// $END$
 
 #include <gtest/gtest.h>
 
