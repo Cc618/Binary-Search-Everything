@@ -42,15 +42,15 @@ if __name__ == "__main__":
         template = f.read()
 
     exo = f"exercises/{name}.md"
-    # solution = f"solutions/{name}.md"
+    solution = f"solutions/{name}.md"
     code = f"solutions/{name}.cpp"
 
     assert os.path.exists(exo), f"{exo} not found"
-    # assert os.path.exists(solution), f'{solution} not found'
+    assert os.path.exists(solution), f"{solution} not found"
     assert os.path.exists(code), f"{code} not found"
 
     content_exo = markdown_to_html(exo)
-    # content_solution = markdown_to_html(solution)
+    content_solution = markdown_to_html(solution)
     with open(code) as f:
         content_code = f.read()
     code_begin = content_code.index("$BEGIN$") + len("$BEGIN$") + 1
@@ -60,8 +60,7 @@ if __name__ == "__main__":
 
     template = template.replace("$NAME$", name_beautiful)
     template = template.replace("$EXERCISE$", content_exo)
-    # TODO
-    # template = template.replace('$SOLUTION$', content_solution)
+    template = template.replace("$SOLUTION$", content_solution)
     template = template.replace("$CODE$", content_code)
 
     # Save content
