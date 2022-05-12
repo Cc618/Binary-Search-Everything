@@ -8,8 +8,7 @@ set -e
 rm -rf public
 cp -r web public
 
-mkdir public/problems
-
+# Parse exercises
 echo "<ul>" > public/summary.html
 for exo in exercises/*.md; do
     name="$(basename "${exo%.md}")"
@@ -18,11 +17,15 @@ for exo in exercises/*.md; do
 done
 echo "</ul>" >> public/summary.html
 
+# Replace index special variables (summary...)
 scripts/replace_specials.py
 
-# TODO : Markdown...
-# mkdir public/{exercises,solutions}
-cp -r exercises public
-cp -r solutions public
+# Copy full solutions
+mkdir -p public/solutions
+cp solutions/*.cpp public/solutions
+
+# Clean
+rm public/summary.html
+rm public/template.html
 
 echo Deployed

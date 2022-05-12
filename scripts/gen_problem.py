@@ -58,6 +58,7 @@ if __name__ == "__main__":
     content_code = content_code[code_begin:code_end]
     content_code = highlight_code(content_code)
 
+    template = template.replace("$FULL_NAME$", name)
     template = template.replace("$NAME$", name_beautiful)
     template = template.replace("$EXERCISE$", content_exo)
     template = template.replace("$SOLUTION$", content_solution)
@@ -69,4 +70,6 @@ if __name__ == "__main__":
 
     # Update summary
     with open(f"public/summary.html", "a") as f:
-        print(f'<li><a href="{name}.html">{name_beautiful}</a></li>', file=f)
+        print(
+            f'<li class="camel"><a href="{name}.html">{name_beautiful}</a></li>', file=f
+        )
