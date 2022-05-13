@@ -28,7 +28,6 @@ The output should be **2** since we can make this new array :
 |  $i$  | 0 | 1 | **2** | 3 |
 
 ### Follow-up
-<details>
 Return the index where $X$ must be within $A$.
 
 #### Example
@@ -48,4 +47,3 @@ The output should be **2** since we can make this new array :
 | $A_i$ | 1 | 4 | **7** | 8 | 10 |
 | ----- | - | - | - | - | -- |
 |  $i$  | 0 | 1 | **2** | 3 | 4 |
-</details>
