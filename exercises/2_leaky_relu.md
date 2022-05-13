@@ -7,15 +7,18 @@ The LeakyReLU function can be split into two parts :
 
 > Credit: paperswithcode.com
 
-Given a sample of this function in an array $A$ of length $N$.
+We provide the array $A$ of length $N$ such that $A_i = \text{LeakyReLU}(i + a) + b$ where $a$ is an integer and $b$ is a floating point value.
+
+That is, the array $A$ contains values of the LeakyReLU function added to a constant $b$.
+
 Find the index of the value belonging in the two parts of this function.
 
 ### Example
 Given this array of length 7 :
 
-| 0   | 1   | 2   | 3       | 4   | 5   | 6   |
-| --- | --- | --- | ------- | --- | --- | --- |
-| 1   | 1.2 | 1.4 | **1.6** | 2.6 | 3.6 | 4.6 |
+| $A_i$ | 0   | 1   | 2   | 3       | 4   | 5   | 6   |
+| ----- | --- | --- | --- | ------- | --- | --- | --- |
+|  $i$  | 1   | 1.2 | 1.4 | **1.6** | 2.6 | 3.6 | 4.6 |
 
 - Values from 0 to 3 included are the leaky part
 - Values from 3 to 4 included are the identity part
