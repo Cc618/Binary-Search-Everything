@@ -18,16 +18,16 @@ You want to change your program to print only one average value, the $K$-th one.
 ### Time complexity
 - O(U $\times$ log(U) $\times$ log(U))) with U = max(N, M)
 
-### Examples
+### Example
 
-##### Input
+#### Input
 - A = [1, 4, 3]
 - B = [5, 2, 4]
 - K = 5
 
-##### Output
+#### Output
 3
 
-##### Details
+#### Details
 All possibles average values are [1.5, 2.5, 2.5, 3, 3, 3.5, 4, 4, 4.5] in order.
 The 5th one is 3.
