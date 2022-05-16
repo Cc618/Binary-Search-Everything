@@ -2,12 +2,11 @@
 
 /* --- Variables --- */
 html {
-    --bg-color: #eeeeee;
-    /* #FBF1C7; */
+    --bg-color: #f2f2f2;
     --fg-color: #282828;
-    --bg-light: #f9f5d7;
-    --fg-light: #3c3836;
-    --purple: #b16286;
+    --bg-alt: #eaeaea;
+    --fg-alt: #3c3836;
+    --accent: #009999;
 }
 
 /* --- Layout --- */
@@ -47,7 +46,7 @@ h6 {
 table {
     margin: auto;
 
-    background-color: var(--bg-light);
+    background-color: var(--bg-alt);
     border-radius: 4px;
 }
 
@@ -67,7 +66,7 @@ td {
 
 
 /* --- Decorations --- */
-.highlighter-rouge {
+.highalter-rouge {
     border: 1px solid var(--fg-color);
     border-radius: 4px;
     margin: 1rem;
@@ -77,11 +76,11 @@ td {
 }
 
 blockquote {
-    border-left: 4px solid var(--purple);
+    border-left: 4px solid var(--accent);
     margin: .8rem 0 0 0;
     padding: 1px 1rem;
-    background-color: var(--bg-light);
-    color: var(--fg-light);
+    background-color: var(--bg-alt);
+    color: var(--fg-alt);
 }
 
 /* --- Text --- */
