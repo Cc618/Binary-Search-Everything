@@ -9,9 +9,16 @@ import html
 
 
 def markdown_to_html(path):
+    proc = sp.run(
+        ["kramdown", "--version"],
+        capture_output=True,
+    )
+    version_m = int(str(proc.stdout).split('.')[1])
+
     config_args = ["--config-file", "scripts/kramdown_config.yml"]
-    # TODO : Version...
-    if 'laptop' in os.uname().nodename:
+
+    # GFM by default
+    if version_m >= 3:
         config_args = []
 
     proc = sp.run(
