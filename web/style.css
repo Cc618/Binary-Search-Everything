@@ -2,7 +2,8 @@
 
 /* --- Variables --- */
 html {
-    --bg-color: #FBF1C7;
+    --bg-color: #eeeeee;
+    /* #FBF1C7; */
     --fg-color: #282828;
     --bg-light: #f9f5d7;
     --fg-light: #3c3836;

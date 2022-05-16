@@ -9,8 +9,13 @@ import html
 
 
 def markdown_to_html(path):
+    config_args = ["--config-file", "scripts/kramdown_config.yml"]
+    # TODO : Version...
+    if 'laptop' in os.uname().nodename:
+        config_args = []
+
     proc = sp.run(
-        ["kramdown", "--config-file", "scripts/kramdown_config.yml", path],
+        ["kramdown", *config_args, path],
         capture_output=True,
     )
 
