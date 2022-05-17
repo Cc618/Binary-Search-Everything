@@ -29,7 +29,7 @@ Thus, the value 1.6 at index 3 belongs to both parts.
 > Answer : 3
 
 ### Constraints
-- 0 <= N <= 10^5
+- $0 \le N \le 10^5$
 
 ### Complexity
-- Time : O(log N)
+- Time : $O(\log N)$
