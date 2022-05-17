@@ -1,5 +1,6 @@
 ### Statement
 The LeakyReLU function can be split into two parts :
+
 - The identity function (left hand side), e.g. $y = x$
 - The leaky part (left hand side), that is, the identity function multiplied by a small factor such as 0.2, e.g. $y = 0.2 \times x$
 

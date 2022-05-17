@@ -19,7 +19,7 @@ def markdown_to_html(path):
 
     # GFM by default
     if version_m >= 3:
-        config_args = []
+        config_args = ["-x", "parser-gfm"]
 
     proc = sp.run(
         ["kramdown", *config_args, path],
