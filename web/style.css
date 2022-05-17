@@ -6,7 +6,9 @@ html {
     --fg-color: #282828;
     --bg-alt: #eaeaea;
     --fg-alt: #3c3836;
-    --accent: #009999;
+    --accent: #40C4FF;
+    --bg-light-accent: #E1F5FE;
+    --text-accent: #00B0FF;
 }
 
 /* --- Layout --- */
@@ -45,8 +47,9 @@ h6 {
 
 table {
     margin: auto;
+    border-collapse: collapse;
 
-    background-color: var(--bg-alt);
+    background-color: white;
     border-radius: 4px;
 }
 
@@ -55,15 +58,14 @@ tr>* {
     text-align: center;
 }
 
-table {
-    border-collapse: collapse;
-}
-
 th,
 td {
     border: 1px solid;
 }
 
+a {
+    color: var(--text-accent);
+}
 
 /* --- Decorations --- */
 .highalter-rouge {
@@ -72,7 +74,6 @@ td {
     margin: 1rem;
 
     padding: 8px;
-    font-size: 0.8rem;
 }
 
 blockquote {
@@ -86,4 +87,8 @@ blockquote {
 /* --- Text --- */
 .camel {
     text-transform: capitalize;
+}
+
+code {
+    font-size: 0.8rem;
 }
