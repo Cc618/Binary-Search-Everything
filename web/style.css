@@ -15,7 +15,7 @@ html {
 body {
     max-width: 70rem;
     margin: auto;
-    padding: 1rem .5rem;
+    padding: 2rem 1rem;
 
     font-family: 'Roboto', sans-serif;
     color: var(--fg-color);
