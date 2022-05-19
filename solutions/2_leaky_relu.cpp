@@ -6,14 +6,14 @@ using namespace std;
 // Returns whether it is the leaky part
 bool leaky_part(const vector<float> &values, int i) {
     // Float precision...
-    return abs(values[i] - values[i + 1]) >= .99f;
+    return abs(values[i] - values[i + 1]) < .99f;
 }
 
 int leaky_relu(const vector<float> &values) {
 #if 0
     // O(N) version
     for (int i = 0; i + 1 < values.size(); i++) {
-        if (leaky_part(values, i)) {
+        if (!leaky_part(values, i)) {
             return i;
         }
     }
@@ -28,13 +28,14 @@ int leaky_relu(const vector<float> &values) {
 
         // Find the first time this function returns true w.r.t. mid
         if (leaky_part(values, mid)) {
-            r = mid;
-        } else {
             l = mid + 1;
+        } else {
+            r = mid;
         }
     }
 
-    if (l == values.size() - 1 && !leaky_part(values, values.size() - 2)) {
+    // The array is only leaky
+    if (l == values.size() - 1 && leaky_part(values, values.size() - 2)) {
         return values.size();
     }
 
@@ -46,7 +47,7 @@ int leaky_relu(const vector<float> &values) {
 int leaky_relu_stl(const vector<float> &values) {
     vector<bool> filter(values.size() - 1);
     for (int i = 0; i + 1 < values.size(); ++i) {
-        filter[i] = leaky_part(values, i);
+        filter[i] = !leaky_part(values, i);
     }
 
     // Only leaky
