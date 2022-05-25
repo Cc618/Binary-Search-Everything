@@ -141,6 +141,7 @@ html {
 .title h1 {
     color: var(--bg-alt);
     font-size: 6rem;
+    margin-top: 1rem;
 }
 
 #goto-summary-link,
