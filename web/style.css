@@ -136,3 +136,19 @@ body {
     color: var(--bg-alt);
     font-size: 6rem;
 }
+
+.summary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.summary>div {
+    margin-right: 5rem;
+}
+
+.summary li {
+    font-size: 2rem;
+    margin-top: 1.5em;
+    margin-bottom: 1.5rem;
+}
