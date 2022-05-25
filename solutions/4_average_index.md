@@ -26,9 +26,9 @@ At every iteration, we have to query whether the $K$-th value is lower or higher
 To do so, we can count the number of average values strictly less than $mid$.
 If this number is strictly less than $K$, then it is guaranteed that $x$ is after $mid$ (so the new interval is [mid + 1, r]).
 
-We call the query function $count\_lower$.
+We call the query function $count\\_lower$.
 
-> Time complexity $O(log(max(A) + max(B)) \times O(count\_lower))$
+> Time complexity $O(log(max(A) + max(B)) \times O(count\\_lower))$
 
 ### Query function
 This function takes as parameter $x$ and returns how many average values are strictly less than $x$.
@@ -45,7 +45,7 @@ The query function is then $\frac {A_i + B_{mid}} 2 < x$ (note that $mid$ is the
 
 #### Main function
 
-- Binary search $result$ with interval $[0, \frac {max_i(A_i) + max_j(B_j)} 2]$, last value such that $count\_lower(result) < K$
+- Binary search $result$ with interval $[0, \frac {max_i(A_i) + max_j(B_j)} 2]$, last value such that $count\\_lower(result) < K$
 - Return $result$ (or $\frac {result} 2$ in the [Implementation tip](#implementation-tip) section)
 
 #### Query function (count_lower(x))
