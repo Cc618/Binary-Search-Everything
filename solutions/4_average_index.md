@@ -44,10 +44,12 @@ The query function is then $\frac {A_i + B_{mid}} 2 < x$ (note that $mid$ is the
 ### To sum up
 
 #### Main function
+
 - Binary search $result$ with interval $[0, \frac {max_i(A_i) + max_j(B_j)} 2]$, last value such that $count\_lower(result) < K$
 - Return $result$ (or $\frac {result} 2$ in the [Implementation tip](#implementation-tip) section)
 
 #### Query function (count_lower(x))
+
 - For every row $i$
   - Binary search the last index $j$ where $\frac {A_i + B_j} 2 < x$
   - Add $j$ to the total count
