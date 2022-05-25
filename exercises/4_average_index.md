@@ -6,7 +6,7 @@ An average value is the average of one element of A and one element of B.
 
 In other words, your program prints every value $C_k = \frac {A_i + B_j} 2$ such that $C_1 \le C_2 \le ... \le C_{M \times N}$.
 
-You want to change your program to print only one average value, the $K$-th one.
+Since your program takes too much time to print every values when $A$ and $B$ are large, you want to change your program to **print only one average value, the $K$-th one**.
 
 ### Input
 - $1 \le N \le 2 \times 10^5$
