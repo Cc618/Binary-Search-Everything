@@ -109,6 +109,10 @@ body {
     margin: 0;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 .page {
     min-width: 100vw;
     max-width: 100vw;
@@ -122,6 +126,8 @@ body {
 .title {
     background-color: var(--accent);
     display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .title .page-content {
@@ -135,6 +141,34 @@ body {
 .title h1 {
     color: var(--bg-alt);
     font-size: 6rem;
+}
+
+.goto-summary {
+    font-size: 2rem;
+    background-color: white;
+    padding: .4rem 2rem;
+    border-radius: 1rem;
+    margin: 2rem;
+
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+
+    transition: ease-in-out 100ms;
+}
+
+#goto-summary-link,
+#goto-summary-link * {
+    text-decoration: none;
+}
+
+.goto-summary:hover {
+    transform: scale(1.05) translateY(-.25rem);
+    cursor: pointer;
+}
+
+.goto-summary>* {
+    padding: 0;
+    margin: 0;
+    color: var(--fg-color);
 }
 
 .summary {
