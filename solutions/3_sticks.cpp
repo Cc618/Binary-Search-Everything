@@ -30,19 +30,6 @@ int max_sticks_score(const vector<int> &columns, int k) {
     // k generations
     int max_score = *max_element(columns.begin(), columns.end()) * k;
 
-#if 0
-    // * O(N * max(A) * K)
-    int last_possible = 0;
-    for (int i = 0; i <= max_score; ++i) {
-        bool is_possible = score_possible(columns, k, i);
-        // cout << i << " -> " << is_possible << endl;
-
-        if (is_possible) {
-            last_possible = i;
-        }
-    }
-#else
-    // * O(N log(max(A) * K))
     // Always possible to do a score of 0
     int last_possible = 0;
     int l = 0;
@@ -56,7 +43,6 @@ int max_sticks_score(const vector<int> &columns, int k) {
             r = mid;
         }
     }
-#endif
 
     return last_possible;
 }

@@ -12,13 +12,6 @@ static float bruteforce(vector<int> a, vector<int> b, int k) {
 
     sort(avgs.begin(), avgs.end());
 
-#if 0
-    for (auto e : avgs) {
-        cout << e * .5f << " ";
-    }
-    cout << endl;
-#endif
-
     // 1 based
     return avgs[k - 1] * .5f;
 }
@@ -28,17 +21,6 @@ static float bruteforce(vector<int> a, vector<int> b, int k) {
 int count_lower(const vector<int> &a, const vector<int> &b, int x) {
     int n_lower = 0;
     for (int i = 0; i < a.size(); ++i) {
-#if 0
-        // O(N) version
-        for (int j = 0; j < b.size(); ++j) {
-            int current_avg = (a[i] + b[j]) / 2;
-            if (current_avg >= x)
-                break;
-
-            ++n_lower;
-        }
-#endif
-
         // Find how many values < x by binary search
         int l = 0;
         int r = b.size();
@@ -81,23 +63,6 @@ float average_index(vector<int> a, vector<int> b, int k) {
     }
     // r points to the first count_lower(a, b, r) >= k
     int result = max(0, r - 1);
-
-#if 0
-    // --- Brute force ---
-    int last_true = 0;
-    for (int i = l; i < r; i++) {
-        auto count = count_lower(a, b, i);
-        bool ok = count < k;
-        cout << setw(2) << i << " " << count << " (" << boolalpha << ok <<
-        ")"
-             << endl;
-
-        if (ok) {
-            last_true = i;
-        }
-    }
-    result = last_true;
-#endif
 
     return result * .5f;
 }

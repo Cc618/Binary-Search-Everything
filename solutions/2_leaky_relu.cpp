@@ -10,17 +10,6 @@ bool leaky_part(const vector<float> &values, int i) {
 }
 
 int leaky_relu(const vector<float> &values) {
-#if 0
-    // O(N) version
-    for (int i = 0; i + 1 < values.size(); i++) {
-        if (!leaky_part(values, i)) {
-            return i;
-        }
-    }
-
-    return values.size();
-#endif
-
     int l = 0;
     int r = values.size() - 1;
     while (l < r) {
