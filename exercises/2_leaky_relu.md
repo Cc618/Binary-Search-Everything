@@ -1,3 +1,5 @@
+> Difficulty : *Medium*
+
 ### Statement
 The LeakyReLU function can be split into two parts :
 

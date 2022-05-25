@@ -1,3 +1,5 @@
+> Difficulty : *Medium*
+
 ### Statement
 Given an integer $N$, find its integer square root.
 

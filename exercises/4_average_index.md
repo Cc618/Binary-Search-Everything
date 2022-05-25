@@ -1,3 +1,5 @@
+> Difficulty : *Hard*
+
 ### Statement
 You are given two integer arrays A and B of length N and M respectively.
 You wrote a program that prints out every average values in non decreasing order.

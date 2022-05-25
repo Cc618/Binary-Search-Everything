@@ -1,3 +1,5 @@
+> Difficulty : *Easy*
+
 ### Statement
 There are an array $A$ of length $N$ sorted in non-descending order
 (that is, $A_i \le A_{i + 1}$) and a value $X$.

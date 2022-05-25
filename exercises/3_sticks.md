@@ -1,3 +1,5 @@
+> Difficulty : *Hard*
+
 ### Statement
 There are $N$ columns.
 At the top of each column, there is a magic bag containing sticks.
