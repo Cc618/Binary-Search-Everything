@@ -12,11 +12,12 @@ Since the initial order of $B$ and $A$ doesn't modify the problem, we can sort t
 In order, the average values are [1.5, 2.5, 2.5, 3, **3**, 3.5, 4, 4, 4.5] (**3** is the $K = 5$-th value).
 
 Let $x$ be the $K$-th value (the result we want).
-<!-- TODO : Reformulate... -->
-The $K$-th value means that it exists strictly less than $K$ values strictly less than $x - 0.5$ and more than $K$ values strictly less than $x + 0.5$ (if all average values are distinct, then it exists exactly $K$ values less or equal to $x$).
 
-If we count the number of values less or equal to every possible $x$, we can deduce our result.
-This can be done using binary search
+The $K$-th value means that it exists strictly less than $K$ values strictly less than $x$.
+It also means that there are $K$ or more than $K$ values less or equal to $x$ (if all average values are distinct, then it exists exactly $K$ values less or equal to $x$).
+
+If we count the number of values less or equal to any $x$, we can deduce our result.
+This can be done using binary search.
 
 ### Binary search
 The minimum and maximum average values are $0$ ($A$ and $B$ contains only positive integers) and $\frac {max_i(A_i) + max_j(B_j)} 2$ respectively, this is the initial interval.
