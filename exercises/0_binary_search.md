@@ -16,18 +16,18 @@ If $X$ is not in the array, return $-1$.
 #### Input
 - The array $A$ :
 
-| $A_i$ | 1 | 4 | 8 | 10 |
-| ----- | - | - | - | -- |
-|  $i$  | 0 | 1 | 2 | 3 |
+| $A_i$ | 1   | 4   | 8   | 10  |
+| ----- | --- | --- | --- | --- |
+| $i$   | 0   | 1   | 2   | 3   |
 
 - $X = 8$
 
 #### Output
 The output should be **2** since we can make this new array :
 
-| $A_i$ | 1 | 4 | **8** | 10 |
-| ----- | - | - | - | -- |
-|  $i$  | 0 | 1 | **2** | 3 |
+| $A_i$ | 1   | 4   | **8** | 10  |
+| ----- | --- | --- | ----- | --- |
+| $i$   | 0   | 1   | **2** | 3   |
 
 ### Follow-up
 Return the index where $X$ must be within $A$.
@@ -37,15 +37,15 @@ Return the index where $X$ must be within $A$.
 ##### Input
 - The array $A$ :
 
-| $A_i$ | 1 | 4 | 8 | 10 |
-| ----- | - | - | - | -- |
-|  $i$  | 0 | 1 | 3 | 4 |
+| $A_i$ | 1   | 4   | 8   | 10  |
+| ----- | --- | --- | --- | --- |
+| $i$   | 0   | 1   | 2   | 3   |
 
 - $X = 7$
 
 ##### Output
 The output should be **2** since we can make this new array :
 
-| $A_i$ | 1 | 4 | **7** | 8 | 10 |
-| ----- | - | - | - | - | -- |
-|  $i$  | 0 | 1 | **2** | 3 | 4 |
+| $A_i$ | 1   | 4   | **7** | 8   | 10  |
+| ----- | --- | --- | ----- | --- | --- |
+| $i$   | 0   | 1   | **2** | 3   | 4   |

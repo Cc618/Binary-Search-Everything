@@ -19,9 +19,9 @@ Find the index of the value belonging to the two parts of this function (at the 
 ### Example
 Given this array of length 7 :
 
-| $A_i$ | 0   | 1   | 2   | 3       | 4   | 5   | 6   |
+| $A_i$ | 1   | 1.2 | 1.4 | **1.6** | 2.6 | 3.6 | 4.6 |
 | ----- | --- | --- | --- | ------- | --- | --- | --- |
-| $i$   | 1   | 1.2 | 1.4 | **1.6** | 2.6 | 3.6 | 4.6 |
+| $i$   | 0   | 1   | 2   | 3       | 4   | 5   | 6   |
 
 - Values from 0 to 3 included are the leaky part
 - Values from 3 to 4 included are the identity part
