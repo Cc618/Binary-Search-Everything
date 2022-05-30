@@ -21,7 +21,7 @@ Given this array of length 7 :
 
 | $A_i$ | 0   | 1   | 2   | 3       | 4   | 5   | 6   |
 | ----- | --- | --- | --- | ------- | --- | --- | --- |
-|  $i$  | 1   | 1.2 | 1.4 | **1.6** | 2.6 | 3.6 | 4.6 |
+| $i$   | 1   | 1.2 | 1.4 | **1.6** | 2.6 | 3.6 | 4.6 |
 
 - Values from 0 to 3 included are the leaky part
 - Values from 3 to 4 included are the identity part
@@ -35,3 +35,7 @@ Thus, the value 1.6 at index 3 belongs to both parts.
 
 ### Complexity
 - Time : $O(\log N)$
+
+### Follow-up
+Can you do this in O(1) ?
+This won't use any binary search of course...

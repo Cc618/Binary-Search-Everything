@@ -18,7 +18,7 @@ Since your program takes too much time to print every values when $A$ and $B$ ar
 - $1 \le K \le 1 \times 10^{9}$
 
 ### Time complexity
-- O(U $\times$ log(U) $\times$ log(max(A) + max(B)))) with U = max(N, M)
+- O(U $\times$ log(U) $\times$ log(max(A, B)))) with U = max(N, M)
 
 ### Example
 
@@ -33,3 +33,6 @@ Since your program takes too much time to print every values when $A$ and $B$ ar
 #### Details
 All possibles average values are [1.5, 2.5, 2.5, 3, **3**, 3.5, 4, 4, 4.5] in order.
 The 5th one is 3.
+
+### Follow-up
+Can you do this in $O(max(N, M) \times log(min(N, M)))$ ?
