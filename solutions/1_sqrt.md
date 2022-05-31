@@ -6,10 +6,10 @@ Secondly, $0 \le \sqrt N \le N$, we can initialize the interval with $[0, N]$ ($
 While this interval contains more than one number, at each iteration we will decide whether to keep the left or right most half of this interval.
 
 Let *mid* $= \lfloor \frac {l + r} 2 \rfloor$.
-*mid* is our guess, we have to find whether or not $mid < \sqrt N$.
-Since $mid \ge 0$, $mid < \sqrt N \Leftrightarrow mid^2 < {(\sqrt N)}^2$.
-In other words, $mid < \sqrt N \Leftrightarrow mid^2 < N$.
+*mid* is our guess, we have to find whether or not $mid \le \sqrt N$.
+Since $mid \ge 0$, $mid \le \sqrt N \Leftrightarrow mid^2 \le {(\sqrt N)}^2$.
+In other words, $mid \le \sqrt N \Leftrightarrow mid^2 \le N$.
 
-Thus, if $mid^2 < N$, then *mid* is less than $\sqrt N$, the new interval is $[mid + 1, r]$ (and $[l, mid - 1]$ otherwise).
+Thus, if $mid^2 \le N$, then *mid* is less than $\sqrt N$, the new interval is $[mid + 1, r]$ (and $[l, mid - 1]$ otherwise).
 
-The result is $l$ when the interval contains less than two values.
+The result is then the last value $\le \sqrt N$, which is $l - 1$ because $l$ points to the first value strictly greater than $\sqrt N$.
