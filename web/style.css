@@ -196,13 +196,10 @@ html {
 
 /* --- Title animation --- */
 .title-everything span {
-    /* transform: rotate(360deg); */
     display: inline-block;
     animation-name: title-anim;
     animation-duration: 5s;
     animation-iteration-count: infinite;
-    /* animation-fill-mode: forwards; */
-    /* animation-timing-function: linear; */
 }
 
 @keyframes title-anim {
