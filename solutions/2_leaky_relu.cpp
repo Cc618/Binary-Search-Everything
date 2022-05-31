@@ -32,22 +32,6 @@ int leaky_relu(const vector<float> &values) {
 }
 // $END$
 
-// Using STL's lower_bound (O(N) preprocessing)
-int leaky_relu_stl(const vector<float> &values) {
-    vector<bool> filter(values.size() - 1);
-    for (int i = 0; i + 1 < values.size(); ++i) {
-        filter[i] = !leaky_part(values, i);
-    }
-
-    // Only leaky
-    if (!filter.back()) {
-        return values.size();
-    }
-
-    return distance(filter.begin(),
-                    lower_bound(filter.begin(), filter.end(), true));
-}
-
 #include <gtest/gtest.h>
 
 TEST(LeakyRelu, Simple) {
