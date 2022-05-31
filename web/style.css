@@ -139,7 +139,7 @@ html {
 }
 
 .title h1 {
-    color: var(--bg-alt);
+    color: var(--bg-color);
     font-size: 6rem;
     margin-top: 1rem;
 }
@@ -192,6 +192,80 @@ html {
     font-size: 2rem;
     margin-top: 1.5em;
     margin-bottom: 1.5rem;
+}
+
+/* --- Title animation --- */
+.title-everything span {
+    /* transform: rotate(360deg); */
+    display: inline-block;
+    animation-name: title-anim;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+    /* animation-fill-mode: forwards; */
+    /* animation-timing-function: linear; */
+}
+
+@keyframes title-anim {
+
+    0% {
+        transform: scale(1) translate(0);
+        color: var(--bg-color);
+    }
+
+    10% {
+        transform: scale(1.2) translateY(-.8rem);
+        color: rgb(255, 11, 11);
+    }
+
+    15% {
+        transform: scale(1.1) translateY(-.4rem);
+        color: rgb(255, 219, 99);
+    }
+
+    20% {
+        transform: scale(1) translate(0);
+        color: var(--bg-color);
+    }
+}
+
+.anim1 {
+    animation-delay: 0ms;
+}
+
+.anim2 {
+    animation-delay: 40ms;
+}
+
+.anim3 {
+    animation-delay: 80ms;
+}
+
+.anim4 {
+    animation-delay: 120ms;
+}
+
+.anim5 {
+    animation-delay: 160ms;
+}
+
+.anim6 {
+    animation-delay: 200ms;
+}
+
+.anim7 {
+    animation-delay: 240ms;
+}
+
+.anim8 {
+    animation-delay: 280ms;
+}
+
+.anim9 {
+    animation-delay: 320ms;
+}
+
+.anim10 {
+    animation-delay: 360ms;
 }
 
 /* --- Syntax overrides --- */
