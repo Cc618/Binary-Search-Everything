@@ -5,24 +5,17 @@ using namespace std;
 // $BEGIN$
 // Returns whether or not it is possible to make this score with at least k
 // generations
-// Complexity : O(N)
 bool score_possible(const vector<int> &columns, int k, int score) {
-    if (score == 0)
-        return true;
-
+    int gens = 0;
     for (auto col : columns) {
         // We have to generate ceil(score / col) sticks of this size
         // such that the total size is greater or equal to the score
-        int to_generate = (score - 1) / col + 1;
-        k -= to_generate;
-
-        if (k < 0) {
-            return false;
-        }
+        int required_gens = (score - 1) / col + 1;
+        gens += required_gens;
     }
 
-    // We have used k or less than k generations
-    return true;
+    // Possible if we used K or less than K generations to achieve this score
+    return gens <= k;
 }
 
 int max_sticks_score(const vector<int> &columns, int k) {
@@ -36,6 +29,7 @@ int max_sticks_score(const vector<int> &columns, int k) {
     int r = max_score + 1;
     while (l < r) {
         int mid = l + (r - l) / 2;
+        // Is it possible to have a score >= mid using K generations ?
         if (score_possible(columns, k, mid)) {
             last_possible = mid;
             l = mid + 1;
