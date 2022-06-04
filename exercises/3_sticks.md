@@ -27,7 +27,7 @@ You can generate 2 sticks in the first column and the second one and then one st
 | Total size | 6   | 10  | 6   |
 
 Hence, the score is $min(6, 10, 6) = 6$.
-It is possible to prove that this score is maximal.
+It is possible to prove that this score is maximum.
 
 ### Constraints
 - $1 \le N \le 10^5$
