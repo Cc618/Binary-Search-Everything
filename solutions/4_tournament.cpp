@@ -39,7 +39,7 @@ int count_lower(const vector<int> &a, const vector<int> &b, int x) {
     return n_lower;
 }
 
-float average_index(vector<int> a, vector<int> b, int k) {
+float tournament(vector<int> a, vector<int> b, int k) {
     sort(a.begin(), a.end());
     sort(b.begin(), b.end());
 
@@ -75,7 +75,7 @@ static const vector<int> basic_b{2, 4, 5};
 
 TEST(AvgIndex, Basic) {
     int k = 5;
-    auto current = average_index(basic_a, basic_b, k);
+    auto current = tournament(basic_a, basic_b, k);
     auto target = bruteforce(basic_a, basic_b, k);
 
     ASSERT_EQ(current, target);
@@ -83,7 +83,7 @@ TEST(AvgIndex, Basic) {
 
 TEST(AvgIndex, Basic2) {
     int k = 3;
-    auto current = average_index(basic_a, basic_b, k);
+    auto current = tournament(basic_a, basic_b, k);
     auto target = bruteforce(basic_a, basic_b, k);
 
     ASSERT_EQ(current, target);
@@ -91,7 +91,7 @@ TEST(AvgIndex, Basic2) {
 
 TEST(AvgIndex, Basic3) {
     int k = 9;
-    auto current = average_index(basic_a, basic_b, k);
+    auto current = tournament(basic_a, basic_b, k);
     auto target = bruteforce(basic_a, basic_b, k);
 
     ASSERT_EQ(current, target);
@@ -101,7 +101,7 @@ TEST(AvgIndex, Basic4) {
     vector<int> a = {1, 3, 4};
     vector<int> b = {2, 4, 5};
     int k = 0;
-    auto current = average_index(a, b, k);
+    auto current = tournament(a, b, k);
     auto target = bruteforce(a, b, k);
 
     ASSERT_EQ(current, target);
@@ -128,7 +128,7 @@ static const vector<int> hard_b{
 
 TEST(AvgIndex, Hard) {
     int k = 0;
-    auto current = average_index(hard_a, hard_b, k);
+    auto current = tournament(hard_a, hard_b, k);
     auto target = bruteforce(hard_a, hard_b, k);
 
     ASSERT_EQ(current, target);
@@ -136,7 +136,7 @@ TEST(AvgIndex, Hard) {
 
 TEST(AvgIndex, Hard2) {
     int k = 200 * 200;
-    auto current = average_index(hard_a, hard_b, k);
+    auto current = tournament(hard_a, hard_b, k);
     auto target = bruteforce(hard_a, hard_b, k);
 
     ASSERT_EQ(current, target);
@@ -144,7 +144,7 @@ TEST(AvgIndex, Hard2) {
 
 TEST(AvgIndex, Hard3) {
     int k = 42;
-    auto current = average_index(hard_a, hard_b, k);
+    auto current = tournament(hard_a, hard_b, k);
     auto target = bruteforce(hard_a, hard_b, k);
 
     ASSERT_EQ(current, target);
@@ -152,7 +152,7 @@ TEST(AvgIndex, Hard3) {
 
 TEST(AvgIndex, Hard4) {
     int k = 314;
-    auto current = average_index(hard_a, hard_b, k);
+    auto current = tournament(hard_a, hard_b, k);
     auto target = bruteforce(hard_a, hard_b, k);
 
     ASSERT_EQ(current, target);
