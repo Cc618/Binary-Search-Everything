@@ -1,4 +1,6 @@
 ### Analysis
+Let's reformulate a bit the problem : Given $A$ and $B$ and the sorted list of average values $C_k = \frac {A_i + B_j} 2$, what is the $K$-th average value ?
+
 First of all, let's see the problem using a grid on the example ($A$ = [1, 4, 3], $B$ = [5, 2, 4], $K$ = 5).
 $A$ is the vertical and $B$ the horizontal.
 Since the initial order of $B$ and $A$ doesn't modify the problem, we can sort them (only $B$ has to be sorted in this solution though).
