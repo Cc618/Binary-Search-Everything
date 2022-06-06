@@ -1,11 +1,11 @@
 > Difficulty : *Hard*
 
-<!-- TODO A : Rename problem + update solutions -->
 ### Statement
 
-Piscine Tycoon is a new popular game.
+**Piscine Tycoon** is a new popular game.
 
 In this game, there are two teams :
+
 - The students
 - The assistants
 
@@ -22,6 +22,7 @@ At the end of the tournament, all scores are calculated (recall that the score i
 In other words, if $C$ contains every scores : $C_k = \frac {A_i + B_j} 2$ such that $C_1 \le C_2 \le ... \le C_{M \times N}$.
 
 We provide you two arrays of integers containing the points for each player :
+
 - $A$ : Students team players points (student grades)
 - $B$ : Assistants team players points (assistant happiness)
 
@@ -33,8 +34,8 @@ Because it is too long to display every score, your goal is to print only the $K
 - $1 \le A_i \le 2 \times 10^5$
 - $1 \le B_j \le 2 \times 10^5$
 - $1 \le K \le 1 \times 10^{9}$
-- $|A| = N$
-- $|B| = M$
+- $\|A\| = N$
+- $\|B\| = M$
 
 ### Time complexity
 - O(U $\times$ log(U) $\times$ log(max(A, B)))) with U = max(N, M)
