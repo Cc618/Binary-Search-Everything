@@ -27,6 +27,9 @@ float tournament(vector<int> a, vector<int> b, int k) {
 static const vector<int> basic_a{1, 3, 4};
 static const vector<int> basic_b{2, 4, 5};
 
+static const vector<int> spread_a{1, 10};
+static const vector<int> spread_b{200, 400, 1000};
+
 TEST(AvgIndex, Basic) {
     int k = 5;
     auto current = tournament(basic_a, basic_b, k);
@@ -54,9 +57,41 @@ TEST(AvgIndex, Basic3) {
 TEST(AvgIndex, Basic4) {
     vector<int> a = {1, 3, 4};
     vector<int> b = {2, 4, 5};
-    int k = 0;
+    int k = 1;
     auto current = tournament(a, b, k);
     auto target = bruteforce(a, b, k);
+
+    ASSERT_EQ(current, target);
+}
+
+TEST(AvgIndex, Spread1) {
+    int k = 5;
+    auto current = tournament(basic_a, basic_b, k);
+    auto target = bruteforce(basic_a, basic_b, k);
+
+    ASSERT_EQ(current, target);
+}
+
+TEST(AvgIndex, Spread2) {
+    int k = 1;
+    auto current = tournament(basic_a, basic_b, k);
+    auto target = bruteforce(basic_a, basic_b, k);
+
+    ASSERT_EQ(current, target);
+}
+
+TEST(AvgIndex, Spread3) {
+    int k = 3;
+    auto current = tournament(basic_a, basic_b, k);
+    auto target = bruteforce(basic_a, basic_b, k);
+
+    ASSERT_EQ(current, target);
+}
+
+TEST(AvgIndex, Spread4) {
+    int k = 6;
+    auto current = tournament(basic_a, basic_b, k);
+    auto target = bruteforce(basic_a, basic_b, k);
 
     ASSERT_EQ(current, target);
 }
@@ -81,7 +116,7 @@ static const vector<int> hard_b{
     3, 7, 3, 6, 1, 0, 1, 7, 6, 4, 2, 7, 5, 1, 0, 0, 0, 8, 1, 2, 4, 8, 6, 2, 5};
 
 TEST(AvgIndex, Hard) {
-    int k = 0;
+    int k = 1;
     auto current = tournament(hard_a, hard_b, k);
     auto target = bruteforce(hard_a, hard_b, k);
 

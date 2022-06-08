@@ -61,10 +61,9 @@ float tournament(vector<int> a, vector<int> b, int k) {
             r = mid;
         }
     }
-    // r points to the first count_lower(a, b, r) >= k
-    int result = max(0, r - 1);
 
-    return result * .5f;
+    // r points to the first count_lower(a, b, r) >= k
+    return (r - 1) * .5f;
 }
 // $END$
 
