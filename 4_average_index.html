@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <link href="syntax.css" rel="stylesheet" type="text/css">
+    <title>average index</title>
+
+    <!-- MathJAX 3 -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+</head>
+
+<body class="exo-body">
+    <p class="go-home"><a href="index.html">Home</a></p>
+
+    <h1 class="camel">average index</h1>
+    <h2>Exercise</h2>
+    <h3 id="statement">Statement</h3>
+<p>You are given two integer arrays A and B of length N and M respectively.
+You wrote a program that prints out every average values in non decreasing order.</p>
+
+<p>An average value is the average of one element of A and one element of B.</p>
+
+<p>In other words, your program prints every value $C_k = \frac {A_i + B_j} 2$ such that $C_1 \le C_2 \le … \le C_{M \times N}$.</p>
+
+<p>Since your program takes too much time to print every values when $A$ and $B$ are large, you want to change your program to <strong>print only one average value, the $K$-th one</strong>.</p>
+
+<h3 id="input">Input</h3>
+<ul>
+  <li>$1 \le N \le 2 \times 10^5$</li>
+  <li>$1 \le M \le 2 \times 10^5$</li>
+  <li>$1 \le A_i \le 2 \times 10^5$</li>
+  <li>$1 \le B_j \le 2 \times 10^5$</li>
+  <li>$1 \le K \le 1 \times 10^{9}$</li>
+</ul>
+
+<h3 id="time-complexity">Time complexity</h3>
+<ul>
+  <li>O(U $\times$ log(U) $\times$ log(max(A) + max(B)))) with U = max(N, M)</li>
+</ul>
+
+<h3 id="example">Example</h3>
+
+<h4 id="input-1">Input</h4>
+<ul>
+  <li>A = [1, 4, 3]</li>
+  <li>B = [5, 2, 4]</li>
+  <li>K = 5</li>
+</ul>
+
+<h4 id="output">Output</h4>
+<p>3</p>
+
+<h4 id="details">Details</h4>
+<p>All possibles average values are [1.5, 2.5, 2.5, 3, <strong>3</strong>, 3.5, 4, 4, 4.5] in order.
+The 5th one is 3.</p>
+
+
+    <h2>Solution</h2>
+    <details>
+        <h3 id="analysis">Analysis</h3>
+<p>First of all, let’s see the problem using a grid on the example ($A$ = [1, 4, 3], $B$ = [5, 2, 4], $K$ = 5).
+$A$ is the vertical and $B$ the horizontal.
+Since the initial order of $B$ and $A$ doesn’t modify the problem, we can sort them (only $B$ has to be sorted in this solution though).</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>$A$ / $B$</th>
+      <th>2</th>
+      <th>4</th>
+      <th>5</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>1.5</td>
+      <td>2.5</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>2.5</td>
+      <td>3.5</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>3</td>
+      <td>4</td>
+      <td>4.5</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>In order, the average values are [1.5, 2.5, 2.5, 3, <strong>3</strong>, 3.5, 4, 4, 4.5] (<strong>3</strong> is the $K = 5$-th value).</p>
+
+<p>Let $x$ be the $K$-th value (the result we want).
+<!-- TODO : Reformulate... -->
+The $K$-th value means that it exists strictly less than $K$ values strictly less than $x - 0.5$ and more than $K$ values strictly less than $x + 0.5$ (if all average values are distinct, then it exists exactly $K$ values less or equal to $x$).</p>
+
+<p>If we count the number of values less or equal to every possible $x$, we can deduce our result.
+This can be done using binary search</p>
+
+<h3 id="binary-search">Binary search</h3>
+<p>The minimum and maximum average values are $0$ ($A$ and $B$ contains only positive integers) and $\frac {max_i(A_i) + max_j(B_j)} 2$ respectively, this is the initial interval.</p>
+
+<p>At every iteration, we have to query whether the $K$-th value is lower or higher than the $mid$ value.</p>
+
+<p>To do so, we can count the number of average values strictly less than $mid$.
+If this number is strictly less than $K$, then it is guaranteed that $x$ is after $mid$ (so the new interval is [mid + 1, r]).</p>
+
+<p>We call the query function $count_lower$.</p>
+
+<blockquote>
+  <p>Time complexity $O(log(max(A) + max(B)) \times O(count_lower))$</p>
+</blockquote>
+
+<h3 id="query-function">Query function</h3>
+<p>This function takes as parameter $x$ and returns how many average values are strictly less than $x$.</p>
+
+<p>We can compute this in quadratic time complexity but it is necessary to have an efficient query function, let’s use <em>again</em> binary search !</p>
+
+<p>For each row $i$ of the grid, we combine $A_i$ with every $B_j$, $A_i$ doesn’t change so we can binary search the last value of $B_j$ such that $\frac {A_i + B_j} 2 &lt; x$.</p>
+
+<p>The query function is then $\frac {A_i + B_{mid}} 2 &lt; x$ (note that $mid$ is the pivot in this binary search, not the previous one).</p>
+
+<blockquote>
+  <p>Time complexity $O(N \times log(M))$</p>
+</blockquote>
+
+<h3 id="to-sum-up">To sum up</h3>
+
+<h4 id="main-function">Main function</h4>
+
+<ul>
+  <li>Binary search $result$ with interval $[0, \frac {max_i(A_i) + max_j(B_j)} 2]$, last value such that $count_lower(result) &lt; K$</li>
+  <li>Return $result$ (or $\frac {result} 2$ in the <a href="#implementation-tip">Implementation tip</a> section)</li>
+</ul>
+
+<h4 id="query-function-countlowerx">Query function (count_lower(x))</h4>
+
+<ul>
+  <li>For every row $i$
+    <ul>
+      <li>Binary search the last index $j$ where $\frac {A_i + B_j} 2 &lt; x$</li>
+      <li>Add $j$ to the total count</li>
+    </ul>
+  </li>
+  <li>Return the total count</li>
+</ul>
+
+<blockquote>
+  <p>Total time complexity $O(log(max(A) + max(B)) \times N \times log(M))$</p>
+</blockquote>
+
+<h3 id="implementation-tip">Implementation tip</h3>
+<p>It is good to avoid floating points when possible.
+In this exercise, we can notice that $\frac {a + b} 2 = \frac 1 2 \times (a + b)$, we can compute the sum $a + b$ instead of the average and then divide the result by $2$.</p>
+
+    </details>
+
+    <h2>Code</h2>
+    <details>
+        <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"><span class="c1">// Count how many values are strictly lower than x</span>
+<span class="kt">int</span> <span class="nf">count_lower</span><span class="p">(</span><span class="k">const</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">,</span> <span class="kt">int</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">n_lower</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">a</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+<span class="c">#if 0
+        // O(N) version
+        for (int j = 0; j &lt; b.size(); ++j) {
+            int current_avg = (a[i] + b[j]) / 2;
+            if (current_avg &gt;= x)
+                break;
+
+            ++n_lower;
+        }
+#endif
+</span>
+        <span class="c1">// Find how many values &lt; x by binary search</span>
+        <span class="kt">int</span> <span class="n">l</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">r</span> <span class="o">=</span> <span class="n">b</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">l</span> <span class="o">&lt;</span> <span class="n">r</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kt">int</span> <span class="n">mid</span> <span class="o">=</span> <span class="n">l</span> <span class="o">+</span> <span class="p">(</span><span class="n">r</span> <span class="o">-</span> <span class="n">l</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+            <span class="kt">int</span> <span class="n">current_avg</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">b</span><span class="p">[</span><span class="n">mid</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">current_avg</span> <span class="o">&lt;</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">l</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="n">r</span> <span class="o">=</span> <span class="n">mid</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="n">n_lower</span> <span class="o">+=</span> <span class="n">l</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">n_lower</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">float</span> <span class="nf">average_index</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">a</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">b</span><span class="p">,</span> <span class="kt">int</span> <span class="n">k</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">sort</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">a</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+    <span class="n">sort</span><span class="p">(</span><span class="n">b</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">b</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+
+    <span class="c1">// Use integers, not floating points</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="n">e</span> <span class="o">:</span> <span class="n">a</span><span class="p">)</span>
+        <span class="n">e</span> <span class="o">*=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="n">e</span> <span class="o">:</span> <span class="n">b</span><span class="p">)</span>
+        <span class="n">e</span> <span class="o">*=</span> <span class="mi">2</span><span class="p">;</span>
+
+    <span class="c1">// We have to find the last mid where count_lower(a, b, mid) &lt; k is true</span>
+    <span class="kt">int</span> <span class="n">l</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">r</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">back</span><span class="p">()</span> <span class="o">+</span> <span class="n">b</span><span class="p">.</span><span class="n">back</span><span class="p">())</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">l</span> <span class="o">&lt;</span> <span class="n">r</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">mid</span> <span class="o">=</span> <span class="n">l</span> <span class="o">+</span> <span class="p">(</span><span class="n">r</span> <span class="o">-</span> <span class="n">l</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="c1">// Query whether the K-th value is lower or higher than the mid value</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">count_lower</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">mid</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">k</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">l</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">mid</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="c1">// r points to the first count_lower(a, b, r) &gt;= k</span>
+    <span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">r</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+
+<span class="c">#if 0
+    // --- Brute force ---
+    int last_true = 0;
+    for (int i = l; i &lt; r; i++) {
+        auto count = count_lower(a, b, i);
+        bool ok = count &lt; k;
+        cout &lt;&lt; setw(2) &lt;&lt; i &lt;&lt; " " &lt;&lt; count &lt;&lt; " (" &lt;&lt; boolalpha &lt;&lt; ok &lt;&lt;
+        ")"
+             &lt;&lt; endl;
+
+        if (ok) {
+            last_true = i;
+        }
+    }
+    result = last_true;
+#endif
+</span>
+    <span class="k">return</span> <span class="n">result</span> <span class="o">*</span> <span class="mf">.5</span><span class="n">f</span><span class="p">;</span>
+<span class="p">}</span>
+</span></code></pre></div>
+    </details>
+
+    <blockquote><a href="solutions/4_average_index.cpp">Full code</a></blockquote>
+</body>
+
+</html>

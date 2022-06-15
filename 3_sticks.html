@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <link href="syntax.css" rel="stylesheet" type="text/css">
+    <title>sticks</title>
+
+    <!-- MathJAX 3 -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+            svg: {
+                fontCache: 'global',
+                scale: 1.2,
+            },
+            chtml: {
+                scale: 1.2
+            }
+        };
+    </script>
+</head>
+
+<body class="exo-body">
+    <p class="go-home"><a href="index.html">Home</a></p>
+
+    <h1 class="camel">sticks</h1>
+    <h2>Exercise</h2>
+    <blockquote>
+  <p>Difficulty : <em>Hard</em></p>
+</blockquote>
+
+<h3 id="statement">Statement</h3>
+<p>There are $N$ columns.
+At the top of each column, there is a magic bag containing sticks.
+The bag at the $i$-th column can generate a stick of size $A_i$.</p>
+
+<p>You - <em>as a newbie wizard</em> - can generate at most $K$ sticks in total.
+You can choose which bag to use, when a stick is generated, it is placed in its corresponding column.</p>
+
+<p>The size of a column is the sum of every sticks in it.
+For example, if $A_i = 3$ and you generate 2 sticks, then the size of the $i$-th column is $2 \times 3 = 6$.</p>
+
+<p>The score is the minimum size of each column.
+Your goal is to find the maximum possible score after at most $K$ stick generation.</p>
+
+<h3 id="example">Example</h3>
+<ul>
+  <li>$A = [3, 5, 6]$</li>
+  <li>$K = 5$</li>
+</ul>
+
+<p>You can generate 2 sticks in the first column and the second one and then one stick in the last column.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Bags</th>
+      <th>3</th>
+      <th>5</th>
+      <th>6</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td> </td>
+      <td>X</td>
+      <td>X</td>
+      <td>X</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>X</td>
+      <td>X</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Total size</td>
+      <td>6</td>
+      <td>10</td>
+      <td>6</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Hence, the score is $min(6, 10, 6) = 6$.
+It is possible to prove that this score is maximum.</p>
+
+<h3 id="constraints">Constraints</h3>
+<ul>
+  <li>$1 \le N \le 10^5$</li>
+  <li>$1 \le A_i \le 100$</li>
+  <li>$1 \le K \le 10^7$</li>
+</ul>
+
+<p>It can be shown that the maximum score won’t exceed $2 \times 10^9$.</p>
+
+<h3 id="complexity">Complexity</h3>
+<ul>
+  <li>Time : $O(N \log(\max_i(A_i) \times K))$</li>
+</ul>
+
+
+    <h2>Solution</h2>
+    <details>
+        <h3 id="intuition">Intuition</h3>
+<p>To maximize the score, we can try every possible value.</p>
+
+<p>Using the provided example, we obtain this array after $K = 5$ stick generation :</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Score</th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+      <th>8</th>
+      <th>9</th>
+      <th>…</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Can be obtained / exceeded ?</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td><strong>1</strong></td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>As the maximum score is 6, every score &lt;= 6 is possible to obtain / exceed and scores &gt; 6 are impossible to obtain.</p>
+
+<p>In a binary search point of view, we can find the last <strong>1</strong> in logarithm time complexity.</p>
+
+<h3 id="editorial">Editorial</h3>
+<p>Let’s divide this problem into two problems.</p>
+
+<p>First of all, we will make the binary search and then we will create a function to query whether or not it is possible to obtain or exceed a score given $K$ generations.</p>
+
+<h4 id="binary-search">Binary search</h4>
+<p>We have to find search boundaries in first place.
+We can see that it is always possible to have a score of 0.
+Moreover, the maximum possible score is obtained by generating $K$ sticks of maximal size.</p>
+
+<p>The initial interval is then $[0, max_i(A_i) \times K]$.</p>
+
+<p>It is a simple lower bound algorithm, the condition to minimize the interval is whether or not it is possible to obtain / exceed the score (which is the the middle of the interval).</p>
+
+<ol>
+  <li>mid = $\frac {l + r} 2$</li>
+  <li>If <code>possible(mid, k)</code> then interval = $[mid + 1, r]$</li>
+  <li>Otherwise, interval = $[l, mid - 1]$</li>
+</ol>
+
+<p>Note that when we reach step 2., we can set the maximum possible score to <code>mid</code> since it is possible to obtain this score.</p>
+
+<h4 id="query">Query</h4>
+<p>The query function must have a linear time ($O(N)$) for the target complexity, thus it is not possible to simulate the process every time.</p>
+
+<p>The goal of this function is to return whether or not it is possible to achieve the score given as argument using maximum $K$ generations.</p>
+
+<p>For every column, it is possible to deduce the minimum number of generations to achieve this score in constant time, let’s call $G_i$ the minimum number of generations for the column $A_i$.</p>
+
+<ul>
+  <li>$G_i$ = $\lceil \frac {score} {A_i} \rceil$</li>
+</ul>
+
+<blockquote>
+  <p>$\lceil x \rceil$ is the next integer value of $x$ (ceil function)</p>
+</blockquote>
+
+<p>We can see this computation as “find the first integer $x$ where $x \times A_i \ge score$”.
+If the score is divisible by $A_i$ ($x \times A_i = score$) then $x = \frac {score} {A_i}$, otherwise we take the next integer since $x \times A_i$ needs to exceed $score$ using the ceil function.</p>
+
+<p>If the sum of all $G_i$ values is less or equal than $K$, then it is possible to obtain / exceed the score in every column, such that the minimum of these values is greater or equal to the target score.</p>
+
+    </details>
+
+    <h2>Code</h2>
+    <details>
+        <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"><span class="c1">// Returns whether or not it is possible to make this score with at least k</span>
+<span class="c1">// generations</span>
+<span class="kt">bool</span> <span class="nf">score_possible</span><span class="p">(</span><span class="k">const</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">columns</span><span class="p">,</span> <span class="kt">int</span> <span class="n">k</span><span class="p">,</span> <span class="kt">int</span> <span class="n">score</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">gens</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">col</span> <span class="o">:</span> <span class="n">columns</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// We have to generate ceil(score / col) sticks of this size</span>
+        <span class="c1">// such that the total size is greater or equal to the score</span>
+        <span class="kt">int</span> <span class="n">required_gens</span> <span class="o">=</span> <span class="p">(</span><span class="n">score</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">col</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="n">gens</span> <span class="o">+=</span> <span class="n">required_gens</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Possible if we used K or less than K generations to achieve this score</span>
+    <span class="k">return</span> <span class="n">gens</span> <span class="o">&lt;=</span> <span class="n">k</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">max_sticks_score</span><span class="p">(</span><span class="k">const</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">columns</span><span class="p">,</span> <span class="kt">int</span> <span class="n">k</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// It is not possible to have a score greater than this value using</span>
+    <span class="c1">// k generations</span>
+    <span class="kt">int</span> <span class="n">max_score</span> <span class="o">=</span> <span class="o">*</span><span class="n">max_element</span><span class="p">(</span><span class="n">columns</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">columns</span><span class="p">.</span><span class="n">end</span><span class="p">())</span> <span class="o">*</span> <span class="n">k</span><span class="p">;</span>
+
+    <span class="c1">// Always possible to do a score of 0</span>
+    <span class="kt">int</span> <span class="n">last_possible</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">l</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">r</span> <span class="o">=</span> <span class="n">max_score</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">l</span> <span class="o">&lt;</span> <span class="n">r</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">mid</span> <span class="o">=</span> <span class="n">l</span> <span class="o">+</span> <span class="p">(</span><span class="n">r</span> <span class="o">-</span> <span class="n">l</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="c1">// Is it possible to have a score &gt;= mid using K generations ?</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">score_possible</span><span class="p">(</span><span class="n">columns</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">mid</span><span class="p">))</span> <span class="p">{</span>
+            <span class="n">last_possible</span> <span class="o">=</span> <span class="n">mid</span><span class="p">;</span>
+            <span class="n">l</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">mid</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">last_possible</span><span class="p">;</span>
+<span class="p">}</span>
+</span></code></pre></div>
+    </details>
+
+    <blockquote><a href="solutions/3_sticks.cpp">Full code</a></blockquote>
+</body>
+
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <link href="syntax.css" rel="stylesheet" type="text/css">
+    <title>leaky relu</title>
+
+    <!-- MathJAX 3 -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+            svg: {
+                fontCache: 'global',
+                scale: 1.2,
+            },
+            chtml: {
+                scale: 1.2
+            }
+        };
+    </script>
+</head>
+
+<body class="exo-body">
+    <p class="go-home"><a href="index.html">Home</a></p>
+
+    <h1 class="camel">leaky relu</h1>
+    <h2>Exercise</h2>
+    <blockquote>
+  <p>Difficulty : <em>Medium</em></p>
+</blockquote>
+
+<h3 id="statement">Statement</h3>
+<p>The LeakyReLU function can be split into two parts :</p>
+
+<ul>
+  <li>The identity function (left hand side), e.g. $y = x$</li>
+  <li>The leaky part (left hand side), that is, the identity function multiplied by a small factor such as 0.2 (this factor is always between 0 and 1 excluded), e.g. $y = 0.2 \times x$</li>
+</ul>
+
+<p><img width="200px" height="200px" src="https://production-media.paperswithcode.com/methods/Screen_Shot_2020-05-25_at_3.09.45_PM.png" /></p>
+
+<blockquote>
+  <p>Credit: paperswithcode.com</p>
+</blockquote>
+
+<p>We provide the array $A$ of length $N$ such that $A_i = \text{LeakyReLU}(i + \alpha) + \beta$ where $\alpha$ is an integer and $\beta$ is a floating point value.</p>
+
+<p>That is, the array $A$ contains values of the LeakyReLU function added to a constant $\beta$.</p>
+
+<p>Find the index of the value belonging to the two parts of this function (at the point (0, 0) if $\beta = 0$ as in the image).</p>
+
+<h3 id="example">Example</h3>
+<p>Given this array of length 7 :</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>$A_i$</th>
+      <th>1</th>
+      <th>1.2</th>
+      <th>1.4</th>
+      <th><strong>1.6</strong></th>
+      <th>2.6</th>
+      <th>3.6</th>
+      <th>4.6</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>$i$</td>
+      <td>0</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+      <td>5</td>
+      <td>6</td>
+    </tr>
+  </tbody>
+</table>
+
+<ul>
+  <li>Values from 0 to 3 included are the leaky part</li>
+  <li>Values from 3 to 4 included are the identity part</li>
+</ul>
+
+<p>Thus, the value 1.6 at index 3 belongs to both parts.</p>
+
+<blockquote>
+  <p>Answer : 3</p>
+</blockquote>
+
+<h3 id="constraints">Constraints</h3>
+<ul>
+  <li>$0 \le N \le 10^5$</li>
+</ul>
+
+<h3 id="complexity">Complexity</h3>
+<ul>
+  <li>Time : $O(\log N)$</li>
+</ul>
+
+<h3 id="follow-up">Follow-up</h3>
+<p>Can you do this in O(1) ?
+This won’t use any binary search of course…</p>
+
+
+    <h2>Solution</h2>
+    <details>
+        <p>Let’s suppose that the provided array contains both linear and leaky parts,
+that is, the array is neither full linear nor full leaky.</p>
+
+<p>The initial search interval is $[0, N - 1]$ (indices start from 0).</p>
+
+<p>At each iteration, <em>mid</em> is the pivot point.
+To find whether the target point is at the left or right hand side to this point, we can deduce a criterion :</p>
+
+<p><em>leaky_part(i)</em> is a function returning a boolean, it returns <em>true</em> when the part containing the index i is the leaky part (the left part of the function) and <em>false</em> otherwise.</p>
+
+<p>This function can be easily implemented : <em>leaky_part(i)</em> = <em>true</em> $\Leftrightarrow A_{i + 1} - A_i &lt; 1$.</p>
+
+<p>Thus, when <em>mid</em> is before the target point (at its left), <em>leaky_part(mid)</em> is <em>true</em> and the new interval is $[mid + 1, r]$.</p>
+
+<p>The last $l$ value is the target point.</p>
+
+    </details>
+
+    <h2>Code</h2>
+    <details>
+        <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"><span class="c1">// Returns whether it is the leaky part</span>
+<span class="kt">bool</span> <span class="nf">leaky_part</span><span class="p">(</span><span class="k">const</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">values</span><span class="p">,</span> <span class="kt">int</span> <span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Float precision...</span>
+    <span class="k">return</span> <span class="n">abs</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">values</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mf">.99</span><span class="n">f</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">leaky_relu</span><span class="p">(</span><span class="k">const</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">values</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">l</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">r</span> <span class="o">=</span> <span class="n">values</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">l</span> <span class="o">&lt;</span> <span class="n">r</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">mid</span> <span class="o">=</span> <span class="n">l</span> <span class="o">+</span> <span class="p">(</span><span class="n">r</span> <span class="o">-</span> <span class="n">l</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+
+        <span class="c1">// Find the first time this function returns true w.r.t. mid</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">leaky_part</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">mid</span><span class="p">))</span> <span class="p">{</span>
+            <span class="n">l</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">mid</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="c1">// The array is only leaky</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">l</span> <span class="o">==</span> <span class="n">values</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">leaky_part</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">values</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">-</span> <span class="mi">2</span><span class="p">))</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">values</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">l</span><span class="p">;</span>
+<span class="p">}</span>
+</span></code></pre></div>
+    </details>
+
+    <blockquote><a href="solutions/2_leaky_relu.cpp">Full code</a></blockquote>
+</body>
+
+</html>

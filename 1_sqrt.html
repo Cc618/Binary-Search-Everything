@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <link href="syntax.css" rel="stylesheet" type="text/css">
+    <title>sqrt</title>
+
+    <!-- MathJAX 3 -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+            svg: {
+                fontCache: 'global',
+                scale: 1.2,
+            },
+            chtml: {
+                scale: 1.2
+            }
+        };
+    </script>
+</head>
+
+<body class="exo-body">
+    <p class="go-home"><a href="index.html">Home</a></p>
+
+    <h1 class="camel">sqrt</h1>
+    <h2>Exercise</h2>
+    <blockquote>
+  <p>Difficulty : <em>Medium</em></p>
+</blockquote>
+
+<h3 id="statement">Statement</h3>
+<p>Given an integer $N$, find its integer square root.</p>
+
+<p>$int\_sqrt(N) = \lfloor \sqrt N \rfloor$</p>
+
+<ul>
+  <li>$0 \le N \le 10^5$</li>
+</ul>
+
+<h3 id="example">Example</h3>
+
+<ul>
+  <li>int_sqrt(1) = 1</li>
+  <li>int_sqrt(16) = 4</li>
+  <li>int_sqrt(42) = 6</li>
+</ul>
+
+<h3 id="complexity">Complexity</h3>
+<ul>
+  <li>Time : $O(\log N)$</li>
+</ul>
+
+<h3 id="follow-up">Follow-up</h3>
+<p>Given a real number $X$, find its square root with a precision of $10^{-3}$.</p>
+
+<ul>
+  <li>$0 \le X \le 10^5$</li>
+</ul>
+
+
+    <h2>Solution</h2>
+    <details>
+        <p>First of all, the integer square root function is monotonic.
+Especially, it is either constant or increasing, $\sqrt N \le \sqrt {N + 1}$.</p>
+
+<p>Secondly, $0 \le \sqrt N \le N$, we can initialize the interval with $[0, N]$ ($l = 0$ and $r = N$).</p>
+
+<p>While this interval contains more than one number, at each iteration we will decide whether to keep the left or right most half of this interval.</p>
+
+<p>Let <em>mid</em> $= \lfloor \frac {l + r} 2 \rfloor$.
+<em>mid</em> is our guess, we have to find whether or not $mid \le \sqrt N$.
+Since $mid \ge 0$, $mid \le \sqrt N \Leftrightarrow mid^2 \le {(\sqrt N)}^2$.
+In other words, $mid \le \sqrt N \Leftrightarrow mid^2 \le N$.</p>
+
+<p>Thus, if $mid^2 \le N$, then <em>mid</em> is less than $\sqrt N$, the new interval is $[mid + 1, r]$ (and $[l, mid - 1]$ otherwise).</p>
+
+<p>The result is then the last value $\le \sqrt N$, which is $l - 1$ because $l$ points to the first value strictly greater than $\sqrt N$.</p>
+
+    </details>
+
+    <h2>Code</h2>
+    <details>
+        <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"><span class="kt">int</span> <span class="nf">int_sqrt</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">l</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">r</span> <span class="o">=</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">l</span> <span class="o">&lt;</span> <span class="n">r</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="n">l</span> <span class="o">+</span> <span class="p">(</span><span class="n">r</span> <span class="o">-</span> <span class="n">l</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+
+        <span class="c1">// Query whether the sqrt is lower or higher</span>
+        <span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">y</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">l</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="c1">// l is the integer after the sqrt (l = x + 1 when sqrt x &lt;= sqrt n)</span>
+    <span class="k">return</span> <span class="n">l</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</span></code></pre></div>
+    </details>
+
+    <blockquote><a href="solutions/1_sqrt.cpp">Full code</a></blockquote>
+</body>
+
+</html>

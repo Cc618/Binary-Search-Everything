@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <link href="syntax.css" rel="stylesheet" type="text/css">
+    <title>binary search</title>
+
+    <!-- MathJAX 3 -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+            svg: {
+                fontCache: 'global',
+                scale: 1.2,
+            },
+            chtml: {
+                scale: 1.2
+            }
+        };
+    </script>
+</head>
+
+<body class="exo-body">
+    <p class="go-home"><a href="index.html">Home</a></p>
+
+    <h1 class="camel">binary search</h1>
+    <h2>Exercise</h2>
+    <blockquote>
+  <p>Difficulty : <em>Easy</em></p>
+</blockquote>
+
+<h3 id="statement">Statement</h3>
+<p>There are an array $A$ of length $N$ sorted in non-descending order
+(that is, $A_i \le A_{i + 1}$) and a value $X$.
+Find the index of $X$ within $A$ (indices start from 0).
+If $X$ is not in the array, return $-1$.</p>
+
+<h3 id="input">Input</h3>
+<ul>
+  <li>$-10^9 \le A_i \le 10^9$</li>
+  <li>$-10^9 \le X \le 10^9$</li>
+  <li>$0 \le N \le 2 \times 10^5$</li>
+</ul>
+
+<h3 id="example">Example</h3>
+
+<h4 id="input-1">Input</h4>
+<ul>
+  <li>The array $A$ :</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th>$A_i$</th>
+      <th>1</th>
+      <th>4</th>
+      <th>8</th>
+      <th>10</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>$i$</td>
+      <td>0</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+
+<ul>
+  <li>$X = 8$</li>
+</ul>
+
+<h4 id="output">Output</h4>
+<p>The output should be <strong>2</strong> since we can make this new array :</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>$A_i$</th>
+      <th>1</th>
+      <th>4</th>
+      <th><strong>8</strong></th>
+      <th>10</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>$i$</td>
+      <td>0</td>
+      <td>1</td>
+      <td><strong>2</strong></td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="follow-up">Follow-up</h3>
+<p>Return the index where $X$ must be within $A$.</p>
+
+<h4 id="example-1">Example</h4>
+
+<h5 id="input-2">Input</h5>
+<ul>
+  <li>The array $A$ :</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th>$A_i$</th>
+      <th>1</th>
+      <th>4</th>
+      <th>8</th>
+      <th>10</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>$i$</td>
+      <td>0</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+
+<ul>
+  <li>$X = 7$</li>
+</ul>
+
+<h5 id="output-1">Output</h5>
+<p>The output should be <strong>2</strong> since we can make this new array :</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>$A_i$</th>
+      <th>1</th>
+      <th>4</th>
+      <th><strong>7</strong></th>
+      <th>8</th>
+      <th>10</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>$i$</td>
+      <td>0</td>
+      <td>1</td>
+      <td><strong>2</strong></td>
+      <td>3</td>
+      <td>4</td>
+    </tr>
+  </tbody>
+</table>
+
+
+    <h2>Solution</h2>
+    <details>
+        <p>Suppose $X$ is in the array.
+Maintain two values, $l$ and $r$ representing an interval where $X$ is (e.g. $X \in [l, r]$).</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>$A_i$</th>
+      <th>1</th>
+      <th>4</th>
+      <th>8</th>
+      <th>10</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>$i$</td>
+      <td>0</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <td>l/r</td>
+      <td>l</td>
+      <td> </td>
+      <td> </td>
+      <td>r</td>
+    </tr>
+  </tbody>
+</table>
+
+<blockquote>
+  <p>Note that $r$ is excluded in the source code, that is, the interval is $[l, r - 1]$</p>
+</blockquote>
+
+<p>While this interval has at least two values, we have to minimize it.
+Let <em>mid</em> be the middle value, <em>mid</em> = $\lfloor \frac {l + r} 2 \rfloor$.</p>
+
+<p>To minimize the interval, we have to choose to keep either $[mid + 1, r]$ or $[l, mid - 1]$.</p>
+
+<ul>
+  <li>If $\text{array}_{\text{mid}} &lt; X$, thus $X$ is not after <em>mid</em> so the new interval is $[l, mid - 1]$.</li>
+  <li>Otherwise, the interval is $[mid + 1, r]$.</li>
+</ul>
+
+<!-- TODO : Examples -->
+
+    </details>
+
+    <h2>Code</h2>
+    <details>
+        <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"><span class="kt">int</span> <span class="nf">binary_search</span><span class="p">(</span><span class="k">const</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">array</span><span class="p">,</span> <span class="kt">int</span> <span class="n">val</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// val is within [l, r) (if val is in the array)</span>
+    <span class="kt">int</span> <span class="n">l</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">r</span> <span class="o">=</span> <span class="n">array</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+
+    <span class="c1">// While the range [l, r) is not empty</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">l</span> <span class="o">&lt;</span> <span class="n">r</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">mid</span> <span class="o">=</span> <span class="n">l</span> <span class="o">+</span> <span class="p">(</span><span class="n">r</span> <span class="o">-</span> <span class="n">l</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span> <span class="o">==</span> <span class="n">val</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">// Found</span>
+            <span class="k">return</span> <span class="n">mid</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">val</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">// val is not before l, so val is within [mid + 1, r)</span>
+            <span class="n">l</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="cm">/* array[mid] &gt; val */</span> <span class="p">{</span>
+            <span class="c1">// val is not after r, so val is within [l, mid)</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">mid</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Not found, val should be at index l</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</span></code></pre></div>
+    </details>
+
+    <blockquote><a href="solutions/0_binary_search.cpp">Full code</a></blockquote>
+</body>
+
+</html>
