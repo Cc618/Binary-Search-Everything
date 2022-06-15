@@ -1,4 +1,4 @@
-> **This repo is part of a talk** :
+# :️arrow_right: This repo is part of a talk
 
 ![](res/affiche.png)
 
