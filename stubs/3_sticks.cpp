@@ -3,7 +3,7 @@
 using namespace std;
 
 // $BEGIN$
-int max_sticks_score(const vector<int> &columns, int k) {
+int max_sticks_score(const vector<int> &bags, int k) {
     // FIXME
 }
 // $END$
