@@ -4,7 +4,11 @@ All problems can be viewed via this [Web Site](https://cc618.github.io/Binary-Se
 
 ## Talk
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/bhbG3OmWjpo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<div align="center">
+      <a href="https://www.youtube.com/embed/bhbG3OmWjpo" alt="Stream" title="Stream">
+         <img src="https://img.youtube.com/vi/bhbG3OmWjpo/0.jpg" alt="Stream video" style="width: 100%;">
+      </a>
+</div>
 
 ➡️ Check out the [slides](res/Binary%20Search%20Everything.pdf).
 
